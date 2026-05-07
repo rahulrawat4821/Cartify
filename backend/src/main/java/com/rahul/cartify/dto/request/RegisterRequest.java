@@ -8,6 +8,7 @@ public class RegisterRequest {
 
     public RegisterRequest() {}
 
+    
     public String getName() {
         return name;
     }

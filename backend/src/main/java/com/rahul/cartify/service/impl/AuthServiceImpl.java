@@ -1,9 +1,9 @@
 package com.rahul.cartify.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rahul.cartify.dto.request.RegisterRequest;
+import com.rahul.cartify.dto.response.AuthResponse;
 import com.rahul.cartify.entity.User;
 import com.rahul.cartify.enums.Provider;
 import com.rahul.cartify.enums.Role;
@@ -13,27 +13,40 @@ import com.rahul.cartify.service.AuthService;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public AuthServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
-    public String register(RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request) {
 
-        // check if user already exists
         if (userRepository.findByEmail(request.getEmail()) != null) {
-            return "User already exists";
+
+            return new AuthResponse(
+                    null,
+                    null,
+                    null,
+                    "User already exists"
+            );
         }
 
-        // create new user
         User user = new User();
+
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword()); // (we will hash later)
+        user.setPassword(request.getPassword());
         user.setRole(Role.USER);
         user.setProvider(Provider.LOCAL);
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
-        return "User registered successfully";
+        return new AuthResponse(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getEmail(),
+                "User registered successfully"
+        );
     }
 }

@@ -1,36 +1,31 @@
-package com.rahul.cartify.dto.response;
+package com.rahul.cartify.dto.request;
 
-public class ProductResponse {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
-    private Long id;
+public class ProductRequest {
+
+    @NotBlank(message = "Product name is required")
     private String name;
+
+    @NotBlank(message = "Product description is required")
     private String description;
+
+    @NotNull(message = "Product price is required")
+    @Positive(message = "Product price must be positive")
     private Double price;
 
-    public ProductResponse() {
+    public ProductRequest() {
     }
 
-    public ProductResponse(
-            Long id,
-            String name,
-            String description,
-            Double price) {
-
-        this.id = id;
+    public ProductRequest(String name, String description, Double price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
     // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

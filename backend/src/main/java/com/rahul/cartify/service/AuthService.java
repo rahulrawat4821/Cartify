@@ -1,7 +1,9 @@
 package com.rahul.cartify.service;
 
 import com.rahul.cartify.dto.request.RegisterRequest;
+import com.rahul.cartify.dto.response.AuthResponse;
 
 public interface AuthService {
-    String register(RegisterRequest request);
+
+    AuthResponse register(RegisterRequest request);
 }
