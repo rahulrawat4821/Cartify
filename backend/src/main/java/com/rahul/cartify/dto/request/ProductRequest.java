@@ -16,13 +16,17 @@ public class ProductRequest {
     @Positive(message = "Product price must be positive")
     private Double price;
 
+    @NotBlank(message = "Product image URL is required")
+    private String imageUrl;
+
     public ProductRequest() {
     }
 
-    public ProductRequest(String name, String description, Double price) {
+    public ProductRequest(String name, String description, Double price, String imageUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.imageUrl = imageUrl;
     }
 
     // Getters and Setters
@@ -49,5 +53,13 @@ public class ProductRequest {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

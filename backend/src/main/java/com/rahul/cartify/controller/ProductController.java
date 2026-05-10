@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rahul.cartify.dto.request.ProductRequest;
 import com.rahul.cartify.dto.response.ProductResponse;
@@ -38,14 +39,32 @@ public class ProductController {
         );
     }
 
-    @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(
-            @Valid @RequestBody ProductRequest request) {
+ @PostMapping
+public ResponseEntity<ProductResponse> createProduct(
 
-        return ResponseEntity.ok(
-                productService.createProduct(request)
-        );
-    }
+        @RequestParam("name") String name,
+
+        @RequestParam("description") String description,
+
+        @RequestParam("price") Double price,
+
+        @RequestParam("image") MultipartFile image
+) {
+
+    ProductRequest request =
+            new ProductRequest();
+
+    request.setName(name);
+    request.setDescription(description);
+    request.setPrice(price);
+
+    return ResponseEntity.ok(
+            productService.createProduct(
+                    request,
+                    image
+            )
+    );
+}
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(

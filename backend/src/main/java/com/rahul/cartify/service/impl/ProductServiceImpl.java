@@ -10,14 +10,18 @@ import com.rahul.cartify.dto.response.ProductResponse;
 import com.rahul.cartify.entity.Product;
 import com.rahul.cartify.repository.ProductRepository;
 import com.rahul.cartify.service.ProductService;
+import org.springframework.web.multipart.MultipartFile;
+import com.rahul.cartify.service.ImageUploadService;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final ImageUploadService imageUploadService;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ImageUploadService imageUploadService) {
         this.productRepository = productRepository;
+        this.imageUploadService = imageUploadService;
     }
 
     @Override
@@ -30,7 +34,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getId(),
                         product.getName(),
                         product.getDescription(),
-                        product.getPrice()))
+                        product.getPrice(),
+                        product.getImageUrl()))
                 .collect(Collectors.toList());
     }
 
@@ -45,17 +50,21 @@ public class ProductServiceImpl implements ProductService {
                 product.getId(),
                 product.getName(),
                 product.getDescription(),
-                product.getPrice());
+                product.getPrice(),
+                product.getImageUrl());
     }
 
     @Override
-    public ProductResponse createProduct(ProductRequest request) {
+    public ProductResponse createProduct(ProductRequest request , MultipartFile image) {
 
+        String imageUrl = imageUploadService.uploadImage(image);
+        System.out.println("Image URL: " + imageUrl);
         Product product = new Product();
 
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
+        product.setImageUrl(imageUrl);
 
         Product savedProduct = productRepository.save(product);
 
@@ -63,7 +72,8 @@ public class ProductServiceImpl implements ProductService {
                 savedProduct.getId(),
                 savedProduct.getName(),
                 savedProduct.getDescription(),
-                savedProduct.getPrice());
+                savedProduct.getPrice(),
+                savedProduct.getImageUrl());
     }
 
     @Override
@@ -85,7 +95,8 @@ public class ProductServiceImpl implements ProductService {
                 updatedProduct.getId(),
                 updatedProduct.getName(),
                 updatedProduct.getDescription(),
-                updatedProduct.getPrice());
+                updatedProduct.getPrice(),
+                updatedProduct.getImageUrl());
     } 
 
     @Override 

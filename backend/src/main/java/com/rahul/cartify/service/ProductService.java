@@ -2,14 +2,22 @@ package com.rahul.cartify.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.rahul.cartify.dto.request.ProductRequest;
 import com.rahul.cartify.dto.response.ProductResponse;
 
 public interface ProductService {
 
-    ProductResponse createProduct(ProductRequest request);
+    ProductResponse createProduct(
+            ProductRequest request,
+            MultipartFile image
+    );
 
-    ProductResponse updateProduct(Long id, ProductRequest request);
+    ProductResponse updateProduct(
+            Long id,
+            ProductRequest request
+    );
 
     void deleteProduct(Long id);
 
