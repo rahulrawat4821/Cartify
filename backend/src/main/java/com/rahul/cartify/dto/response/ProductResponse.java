@@ -1,3 +1,4 @@
+
 package com.rahul.cartify.dto.response;
 
 public class ProductResponse {
@@ -7,6 +8,10 @@ public class ProductResponse {
     private String description;
     private Double price;
     private String imageUrl;
+    private Integer stock;
+
+    private Long categoryId;
+    private String categoryName;
 
     public ProductResponse() {
     }
@@ -16,16 +21,23 @@ public class ProductResponse {
             String name,
             String description,
             Double price,
-            String imageUrl) {
+            String imageUrl,
+            Integer stock,
+            Long categoryId,
+            String categoryName
+    ) {
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.stock = stock;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
-    // Getters and Setters
+    // getters and setters
 
     public Long getId() {
         return id;
@@ -66,4 +78,31 @@ public class ProductResponse {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    
 }
+

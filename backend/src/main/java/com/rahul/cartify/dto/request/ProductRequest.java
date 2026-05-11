@@ -19,14 +19,23 @@ public class ProductRequest {
     @NotBlank(message = "Product image URL is required")
     private String imageUrl;
 
+    @NotNull(message = "Category ID is required")
+    private Long categoryId;
+    
+    @NotNull(message = "Stock quantity is required")
+    @Positive(message = "Stock quantity must be positive")
+    private Integer stock;
+
     public ProductRequest() {
     }
 
-    public ProductRequest(String name, String description, Double price, String imageUrl) {
+    public ProductRequest(String name, String description, Double price, String imageUrl, Long categoryId, Integer stock) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.categoryId = categoryId;
+        this.stock = stock;
     }
 
     // Getters and Setters
@@ -61,5 +70,21 @@ public class ProductRequest {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

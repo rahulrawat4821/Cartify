@@ -73,9 +73,10 @@ public AuthenticationProvider authenticationProvider() {
 
         // public GET product routes
         .requestMatchers(
-                org.springframework.http.HttpMethod.GET,
-                "/api/products/**"
-        ).permitAll()
+        org.springframework.http.HttpMethod.GET,
+        "/api/products",
+        "/api/products/**"
+).permitAll()
 
 
          // cart routes
@@ -99,6 +100,18 @@ public AuthenticationProvider authenticationProvider() {
         org.springframework.http.HttpMethod.PUT,
         "/api/cart/**"
 ).authenticated()
+
+.requestMatchers(
+        org.springframework.http.HttpMethod.POST,
+        "/api/categories/**"
+).hasRole("ADMIN")
+
+    // public category routes
+    .requestMatchers(
+            org.springframework.http.HttpMethod.GET,
+            "/api/categories",
+            "/api/categories/**"
+    ).permitAll()
 
         // ADMIN only routes
         .requestMatchers(
